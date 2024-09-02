@@ -1,6 +1,7 @@
 import { HomeIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import type React from "react";
+import { Suspense } from "react";
 
 import { AuthBlock } from "@/components/auth-block";
 import { Searchbar } from "@/components/searchbar";
@@ -18,7 +19,9 @@ export default function RootLayout({
             <Link href="/">
               <HomeIcon className="w-8 h-8 mr-2" />
             </Link>
-            <Searchbar href="/jobs" />
+            <Suspense>
+              <Searchbar href="/jobs" />
+            </Suspense>
           </div>
           <div className="flex items-center space-x-6 rtl:space-x-reverse">
             <Link href="/liked" className="text-sm text-gray-500 dark:text-white hover:underline">
