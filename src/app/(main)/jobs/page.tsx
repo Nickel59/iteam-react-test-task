@@ -35,7 +35,7 @@ export default function JobsPage({ searchParams }: Props) {
     return "Something went wrong";
   }
 
-  if (!data?.length) {
+  if (!data?.length && q) {
     return <h1 className="text-lg font-semibold">Couldn't find anything</h1>;
   }
 
