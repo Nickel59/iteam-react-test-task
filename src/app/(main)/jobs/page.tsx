@@ -1,20 +1,19 @@
 "use client";
 
+import React from "react";
 import useSWR from "swr";
 
 import { fetchJobs } from "@/app/(main)/jobs/actions";
 import { JobCard } from "@/components/job-card";
-import { getUser } from "@/utils";
+import { type User, getUser } from "@/utils";
 
 interface Props {
   readonly searchParams: { readonly q?: string };
 }
 
 export default function JobsPage({ searchParams }: Props) {
-  const user = getUser();
-
+  const [user, setUser] = React.useState<User>(null);
   const q = searchParams.q ?? user?.desiredJobTitle;
-
   const { data, isLoading, error } = useSWR(`jobs ${q}`, q ? () => fetchJobs(q) : null, {
     revalidateOnFocus: false,
     revalidateOnMount: true,
@@ -23,6 +22,10 @@ export default function JobsPage({ searchParams }: Props) {
     refreshWhenHidden: false,
     refreshInterval: 0,
   }); // this api is expensive, do not refetch;
+
+  React.useEffect(() => {
+    setUser(getUser());
+  }, []);
 
   if (isLoading) {
     return undefined;

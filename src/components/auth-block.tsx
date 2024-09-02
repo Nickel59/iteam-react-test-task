@@ -2,8 +2,9 @@
 
 import type { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
+import React from "react";
 
-import { getUser, removeUser } from "@/utils";
+import { type User, getUser, removeUser } from "@/utils";
 
 export interface AuthBlockProps {
   readonly loginHref: Url;
@@ -11,7 +12,11 @@ export interface AuthBlockProps {
 }
 
 export function AuthBlock({ loginHref, signupHref }: AuthBlockProps) {
-  const user = getUser();
+  const [user, setUser] = React.useState<User>(null);
+
+  React.useEffect(() => {
+    setUser(getUser());
+  }, []);
 
   return user ? (
     <>

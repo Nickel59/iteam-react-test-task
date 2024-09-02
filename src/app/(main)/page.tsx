@@ -1,6 +1,10 @@
 "use client";
 
+import React from "react";
+
 export default function Home() {
-  window.location.replace("/jobs");
+  React.useEffect(() => {
+    window.location.replace("/jobs");
+  }, []);
   return undefined;
 }
